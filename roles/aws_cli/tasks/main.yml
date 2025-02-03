@@ -1,14 +1,12 @@
 ---
-- name: Install dependencies for AWS CLI
+- name: Ensure Snap is installed
   apt:
-    name: unzip
+    name: snapd
     state: present
 
-- name: Download and install AWS CLI
-  shell: |
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip -o awscliv2.zip
-    ./aws/install --bin-dir /usr/bin --install-dir /opt/aws-cli > /tmp/aws_install.log 2>&1
-  args:
-    chdir: /tmp
-  become: yes
+- name: Install AWS CLI using Snap
+  snap:
+    name: aws-cli
+    classic: true
+    state: present
+
