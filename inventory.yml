@@ -1,0 +1,11 @@
+all:
+  hosts:
+    heronos_server:
+      ansible_host: 80.158.16.157
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/Downloads/heronos.pem
+
+    # another_server:
+    #   ansible_host: 80.158.60.50
+    #   ansible_user: ubuntu
+    #   ansible_ssh_private_key_file: ~/Downloads/OtherKey
