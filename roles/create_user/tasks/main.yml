@@ -1,0 +1,15 @@
+---
+- name: Ensure developer user exists
+  ansible.builtin.user:
+    name: "{{ developer_name }}"
+    shell: /bin/bash
+    groups: docker
+    create_home: yes
+    state: present
+
+- name: Add developer's authorized SSH key
+  ansible.builtin.authorized_key:
+    user: "{{ developer_name }}"
+    key: "{{ ssh_public_key }}"
+    state: present
+

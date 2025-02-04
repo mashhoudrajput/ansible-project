@@ -1,0 +1,16 @@
+---
+- name: Create developer user dynamically
+  hosts: all
+  become: true
+  vars_prompt:
+    - name: target_server
+      prompt: "Specify the target server hostname (as defined in inventory)"
+    - name: developer_name
+      prompt: "Enter the developer's username"
+    - name: ssh_public_key
+      prompt: "Enter the developer's SSH public key"
+
+  tasks:
+    - include_role:
+        name: create_user
+      when: inventory_hostname == target_server

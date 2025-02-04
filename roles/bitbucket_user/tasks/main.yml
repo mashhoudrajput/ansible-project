@@ -1,0 +1,12 @@
+---
+- name: Create bitbucket user
+  ansible.builtin.user:
+    name: bitbucket
+    password: ''
+    shell: /bin/bash
+
+- name: Add bitbucket user to docker group
+  ansible.builtin.user:
+    name: bitbucket
+    groups: docker
+    append: true
