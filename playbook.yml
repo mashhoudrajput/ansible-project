@@ -7,3 +7,4 @@
     - nginx
     - docker
     - aws_cli
+    - java
