@@ -1,0 +1,33 @@
+---
+- name: Check SSH Compliance on All Servers
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Gather SSHD Configuration
+      command: sshd -T
+      register: sshd_config_output
+      changed_when: false
+
+    - name: Show SSHD Configuration Output
+      debug:
+        var: sshd_config_output.stdout_lines
+
+    - name: Validate SSH Compliance
+      assert:
+        that:
+          - "'permitrootlogin no' in sshd_config_output.stdout"
+          - "'passwordauthentication no' in sshd_config_output.stdout"
+          - "'pubkeyauthentication yes' in sshd_config_output.stdout"
+          - "'maxauthtries 6' in sshd_config_output.stdout"
+          - "'logingracetime 120' in sshd_config_output.stdout"
+          - "'maxsessions 10' in sshd_config_output.stdout"
+          - "'allowagentforwarding no' in sshd_config_output.stdout"
+          - "'allowtcpforwarding no' in sshd_config_output.stdout"
+          - "'x11forwarding no' in sshd_config_output.stdout"
+          - "'permitemptypasswords no' in sshd_config_output.stdout"
+          - "'permituserenvironment no' in sshd_config_output.stdout"
+          - "'gatewayports no' in sshd_config_output.stdout"
+          - "'usepam no' in sshd_config_output.stdout"
+        fail_msg: "SSH compliance check failed!"
+        success_msg: "SSH compliance passed!"

@@ -1,12 +1,12 @@
 all:
   hosts:
-    heronos_dev_microservice:
-      ansible_host: 80.158.36.45
+    heronos_staging-microservice:
+      ansible_host: 80.158.20.101
       ansible_user: ubuntu
       ansible_ssh_private_key_file: ~/Downloads/heronos.pem
 
-    heronos_dev-webclient-webhook-support:
-      ansible_host: 80.158.108.4
+    heronos_dev-microservice:
+      ansible_host: 80.158.36.45
       ansible_user: ubuntu
       ansible_ssh_private_key_file: ~/Downloads/heronos.pem
 

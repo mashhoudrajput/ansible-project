@@ -11,3 +11,4 @@
     - aws_cli
     - java
     - bitbucket_user
+    - ssh_hardening
