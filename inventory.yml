@@ -1,16 +1,25 @@
 all:
-  hosts:
-    heronos_staging-microservice:
-      ansible_host: 80.158.20.101
-      ansible_user: ubuntu
-      ansible_ssh_private_key_file: ~/Downloads/heronos.pem
+  children:
+    dev:
+      hosts:
+        dev-microservice:
+          ansible_host: 80.158.36.45
+        dev-webclient-support-webhook:
+          ansible_host: 80.158.108.4
 
-    heronos_dev-microservice:
-      ansible_host: 80.158.36.45
-      ansible_user: ubuntu
-      ansible_ssh_private_key_file: ~/Downloads/heronos.pem
+    staging:
+      hosts:
+        staging-microservice:
+          ansible_host: 80.158.20.101
+        staging-webclient-support-webhook:
+          ansible_host: 80.158.58.80
 
-    # another_server:
-    #   ansible_host: 80.158.60.50
-    #   ansible_user: ubuntu
-    #   ansible_ssh_private_key_file: ~/Downloads/OtherKey
+    production:
+      hosts:
+        prod-webclient:
+          ansible_host: 164.30.9.141
+
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ~/Downloads/heronos.pem
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
