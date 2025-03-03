@@ -18,6 +18,8 @@ all:
       hosts:
         prod-webclient:
           ansible_host: 164.30.9.141
+        prod-support:
+          ansible_host: 80.158.40.56
 
   vars:
     ansible_user: ubuntu
