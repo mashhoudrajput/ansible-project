@@ -6,6 +6,8 @@ all:
           ansible_host: 80.158.36.45
         dev-webclient-support-webhook:
           ansible_host: 80.158.108.4
+        dev-multiuse-GPU:
+          ansible_host: 80.158.18.75
 
     staging:
       hosts:
@@ -22,6 +24,8 @@ all:
           ansible_host: 80.158.40.56
         prod-microservice:
           ansible_host: 80.158.46.204
+        prod-webhook:
+          ansible_host: 80.158.110.238
 
   vars:
     ansible_user: ubuntu
