@@ -1,33 +1,47 @@
 all:
   children:
     dev:
-      hosts:
-        dev-microservice:
-          ansible_host: 80.158.36.45
-        dev-webclient-support-webhook:
-          ansible_host: 80.158.108.4
-        dev-multiuse-GPU:
-          ansible_host: 80.158.18.75
+      children:
+        dev_gpu:
+          hosts:
+            dev-multiuse-GPU:
+              ansible_host: 80.158.18.75
+        dev_cpu:
+          hosts:
+            dev-microservice:
+              ansible_host: 80.158.36.45
+            dev-webclient-support-webhook:
+              ansible_host: 80.158.108.4
 
     staging:
-      hosts:
-        staging-microservice:
-          ansible_host: 80.158.20.101
-        staging-webclient-support-webhook:
-          ansible_host: 80.158.58.80
+      children:
+        staging_gpu: {}
+        staging_cpu:
+          hosts:
+            staging-microservice:
+              ansible_host: 80.158.20.101
+            staging-webclient-support-webhook:
+              ansible_host: 80.158.58.80
 
     production:
-      hosts:
-        prod-webclient:
-          ansible_host: 164.30.9.141
-        prod-support:
-          ansible_host: 80.158.40.56
-        prod-microservice:
-          ansible_host: 80.158.46.204
-        prod-webhook:
-          ansible_host: 80.158.110.238
+      children:
+        prod_gpu:
+          hosts:
+            prod-whisper-GPU:
+              ansible_host: 80.158.39.157
+        prod_cpu:
+          hosts:
+            prod-webclient:
+              ansible_host: 164.30.9.141
+            prod-support:
+              ansible_host: 80.158.40.56
+            prod-microservice:
+              ansible_host: 80.158.46.204
+            prod-webhook:
+              ansible_host: 80.158.110.238
 
   vars:
     ansible_user: ubuntu
     ansible_ssh_private_key_file: ~/Downloads/heronos.pem
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+

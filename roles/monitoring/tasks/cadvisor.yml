@@ -1,0 +1,22 @@
+---
+- name: Pull cAdvisor image
+  docker_image:
+    name: gcr.io/cadvisor/cadvisor
+    tag: v0.44.0
+    source: pull
+
+- name: Run cAdvisor container
+  docker_container:
+    name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.44.0
+    state: started
+    restart_policy: always
+    privileged: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+

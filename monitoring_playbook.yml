@@ -1,0 +1,28 @@
+---
+- name: Deploy monitoring container(s)
+  hosts: all
+  become: true
+  vars:
+    monitor: all  # Default if none provided
+  collections:
+    - community.docker  # Include the Docker collection for plugins and containers
+
+  tasks:
+    - name: Include Loki plugin configuration
+      import_tasks: roles/monitoring/tasks/loki.yml
+      when: monitor == 'loki' or monitor == 'all'
+
+    - name: Include Node Exporter tasks
+      import_tasks: roles/monitoring/tasks/node_exporter.yml
+      when: monitor == 'node_exporter' or monitor == 'all'
+
+    - name: Include cAdvisor tasks
+      import_tasks: roles/monitoring/tasks/cadvisor.yml
+      when: monitor == 'cadvisor' or monitor == 'all'
+
+  handlers:
+    - name: restart docker
+      service:
+        name: docker
+        state: restarted
+

@@ -1,0 +1,13 @@
+image: python:3.9
+
+pipelines:
+  branches:
+    ansible:
+      - step:
+          name: Run Ansible Playbook
+          caches:
+            - pip
+          script:
+            - apt-get update && apt-get install -y ansible sshpass
+            - pip install boto3
+            - ansible-playbook -i inventory.yml playbook.yml

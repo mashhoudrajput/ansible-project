@@ -1,0 +1,43 @@
+---
+- name: Ensure Loki plugin directory exists
+  become: yes
+  file:
+    path: /run/docker/plugins/
+    state: directory
+    mode: '0755'
+
+- name: Check if Loki plugin is already installed
+  become: yes
+  shell: "docker plugin ls | grep -q 'loki'"
+  ignore_errors: yes
+  register: plugin_exists
+
+- name: Install Loki plugin if not present
+  become: yes
+  command: |
+    docker plugin install grafana/loki-docker-driver:latest --grant-all-permissions --alias loki
+  when: plugin_exists is failed
+
+- name: Enable Loki plugin
+  shell: |
+    docker plugin enable loki || true
+  args:
+    executable: /bin/bash
+  no_log: true
+  become: yes
+
+- name: Configure Docker to use Loki logging driver
+  become: yes
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "debug": true,
+        "log-driver": "loki",
+        "log-opts": {
+          "loki-url": "https://loki.heronos.com/loki/api/v1/push",
+          "loki-batch-size": "400"
+        }
+      }
+  notify:
+    - restart docker

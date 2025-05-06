@@ -1,0 +1,10 @@
+---
+- name: Include Node Exporter task
+  import_tasks: node_exporter.yml
+
+- name: Include cAdvisor task
+  import_tasks: cadvisor.yml
+
+- name: Include Loki logging configuration task
+  import_tasks: loki.yml
+
