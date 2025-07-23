@@ -14,6 +14,11 @@ all:
               ansible_host: 80.158.108.4
 
     staging:
+      vars:
+        ansible_user: ubuntu
+        ansible_ssh_private_key_file: ~/Downloads/heronos.pem
+        ansible_ssh_common_args: '-o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
       children:
         staging_gpu: {}
         staging_cpu:
@@ -22,6 +27,12 @@ all:
               ansible_host: 80.158.20.101
             staging-webclient-support-webhook:
               ansible_host: 80.158.58.80
+            staging-redis:
+              ansible_host: 80.158.56.102
+            staging-rabbitmq:
+              ansible_host: 80.158.22.63
+            staging-sip:
+              ansible_host: 80.158.7.118
 
     production:
       children:
@@ -43,5 +54,5 @@ all:
   vars:
     ansible_user: ubuntu
     ansible_ssh_private_key_file: ~/Downloads/heronos.pem
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ansible_ssh_common_args: '-o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
