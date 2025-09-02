@@ -50,9 +50,12 @@ all:
               ansible_host: 80.158.46.204
             prod-webhook:
               ansible_host: 80.158.110.238
+            prod-redis:
+              ansible_host: 80.158.44.217
+            prod-rabbitmq:
+              ansible_host: 80.158.55.197
 
   vars:
     ansible_user: ubuntu
     ansible_ssh_private_key_file: ~/Downloads/heronos.pem
     ansible_ssh_common_args: '-o IdentitiesOnly=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
-
