@@ -50,6 +50,8 @@ all:
               ansible_host: 80.158.46.204
             prod-webhook:
               ansible_host: 80.158.110.238
+            sip-prod-stream:
+              ansible_host: 80.158.111.174
             prod-redis:
               ansible_host: 80.158.44.217
             prod-rabbitmq:
